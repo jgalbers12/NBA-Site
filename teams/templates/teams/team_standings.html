@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>NBA Standings</h1>
+<h2>Eastern Conference</h2>
+{% for s in standings %}
+    {% if s.Conference == 'East' %}
+        {{s.TeamCity}} {{s.TeamName}} {{s.Record}}<br>
+    {% endif %}
+{% endfor %}
+<h2>Western Conference</h2>
+{% for s in standings %}
+    {% if s.Conference == 'West' %}
+        {{s.TeamCity}} {{s.TeamName}} {{s.Record}}<br>
+    {% endif %}
+{% endfor %}
+
+{% endblock content %}
+

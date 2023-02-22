@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<img src="{{team.logo.url}}" alt="{{team.full_name}}" width="200" height="200"><br>
+<h1>{{team.city}} {{team.nickname}}</h1><br>
+<p>Current Record: {{record}}</p>
+{% endblock content %}
