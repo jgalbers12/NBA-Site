@@ -4,4 +4,9 @@
 <img src="{{team.logo.url}}" alt="{{team.full_name}}" width="200" height="200"><br>
 <h1>{{team.city}} {{team.nickname}}</h1><br>
 <p>Current Record: {{record}}</p>
+<p>Current Roster:
+{% for player in roster %}
+<a href="{% url 'players:player_info' player.PLAYER_ID%}">{{player.PLAYER}}</a>,
+{% endfor %}
+</p>
 {% endblock content %}

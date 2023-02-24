@@ -11,14 +11,18 @@ def all_teams(request):
         }
     return render(request,'teams/all_teams.html',context=context)
 
+
 def team_info(request, pk):
     team = models.BasicTeam.objects.get(id=pk)
     record = utils.get_team_record(pk)
+    roster = utils.TeamRoster(pk).get_players()
     context = {
         'team' : team,
-        'record': record
+        'record': record,
+        'roster': roster
         }
     return render(request, 'teams/team_info.html',context=context)
+
 
 def team_standings(request):
     team = models.BasicTeam.objects.all()

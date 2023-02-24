@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{bio.DISPLAY_FIRST_LAST}}</h1>
+<h2>{{bio.TEAM_CITY}} {{bio.TEAM_NAME}}</h2>
+<ul>
+    <li>Birthday: {{bio.BIRTHDATE}}</li>
+    <li>Height: {{bio.HEIGHT}}</li>
+    <li>Experience: {{bio.SEASON_EXP}} seasons</li>
+    <li>Jersey Number: {{bio.JERSEY}}</li>
+    <li>Position: {{bio.POSITION}}</li>
+</ul>
+<h3>Current Averages</h3>
+<p>PTS: {{stats.PTS}} AST: {{stats.AST}} REB: {{stats.REB}}</p>
+
+{% endblock content %}
+

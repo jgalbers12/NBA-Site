@@ -21,6 +21,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('players/', include('players.urls')),
     path('teams/', include('teams.urls')),
     path('', RedirectView.as_view(pattern_name='teams:all_teams'),name="home")
 ]
