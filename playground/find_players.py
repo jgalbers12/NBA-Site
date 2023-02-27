@@ -9,10 +9,10 @@ SUNS_ID = 1610612756
 SEASON_ID = 12022
 
 def get_active_players():
-    active_players = []
+    active_players = {}
     for player in players.get_players():
         if player['is_active']:
-            active_players.append(player)
+            active_players[player['id']] = {'first_name':player['first_name'], 'last_name':player['last_name']}
 
     return(active_players)
 
@@ -89,5 +89,4 @@ class PlayerInfo(CommonPlayerInfo):
         return key_list
     
 if __name__ == "__main__":
-    kd = PlayerInfo(KD_ID)
-    print(kd.get_bio_tags())
+    print(get_active_players())

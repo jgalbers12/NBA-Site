@@ -1,4 +1,13 @@
 from nba_api.stats.endpoints import CommonPlayerInfo
+from nba_api.stats.static import players
+
+def get_active_players():
+    active_players = {}
+    for player in players.get_players():
+        if player['is_active']:
+            active_players[player['id']] = {'first_name':player['first_name'], 'last_name':player['last_name'], 'is_active':True}
+
+    return(active_players)
 
 class PlayerInfo(CommonPlayerInfo):
     def __init__(self, player_id):
@@ -24,5 +33,8 @@ class PlayerInfo(CommonPlayerInfo):
     
     def get_headline_stats(self):
         all_info = self._get_player_info_dict()
-        stats = all_info['PlayerHeadlineStats'][0]
-        return stats
+        try:
+            stats = all_info['PlayerHeadlineStats'][0]
+            return stats
+        except:
+            return None

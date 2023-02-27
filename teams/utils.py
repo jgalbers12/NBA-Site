@@ -17,6 +17,8 @@ def get_team_record(team_id=None):
             return team['Record']
     raise Exception("team_id is not a valid team id")
 
+
+
 class TeamRoster(CommonTeamRoster):
     def __init__(self, team_id, **kwargs):
         super().__init__(team_id, **kwargs)
@@ -46,22 +48,6 @@ class TeamRoster(CommonTeamRoster):
         coaches = roster['Coaches']
         return(coaches)
     
-#def get_team_roster(team_id, **kwargs):
-#     """ 
-#     returns a dict, 
-#     players found at return_dict['CommonTeamRoster'],
-#     couches found at return_dict['Coaches'],
-#     player keys: 'TeamID', 'SEASON', 'LeagueID', 'PLAYER', 'NICKNAME',
-#         'PLAYER_SLUG', 'NUM', 'POSITION', 'HEIGHT', 'WEIGHT', 'BIRTH_DATE',
-#         'AGE', 'EXP', 'SCHOOL', 'PLAYER_ID', 'HOW_ACQUIRED'
-#     """
-#     roster = CommonTeamRoster(team_id)
-#     for k,v in kwargs.items():
-#         roster.__setattr__(k, v)
-#     return(roster.get_normalized_dict())
 
-# def get_team_players(team_id, **kwargs):
-#     roster = get_team_roster(team_id, **kwargs)
-#     return(roster['CommonTeamRoster'])
 
     

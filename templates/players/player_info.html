@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<img src="https://cdn.nba.com/headshots/nba/latest/520x380/{{ bio.PERSON_ID}}.png" alt="">
 <h1>{{bio.DISPLAY_FIRST_LAST}}</h1>
 <h2>{{bio.TEAM_CITY}} {{bio.TEAM_NAME}}</h2>
 <ul>
@@ -11,8 +12,12 @@
     <li>Jersey Number: {{bio.JERSEY}}</li>
     <li>Position: {{bio.POSITION}}</li>
 </ul>
+{% if stats %} 
 <h3>Current Averages</h3>
-<p>PTS: {{stats.PTS}} AST: {{stats.AST}} REB: {{stats.REB}}</p>
+<p>PTS: {{stats.PTS}} AST: {{stats.AST}} REB: {{stats.REB}}</p> 
+{% else %}
+<h3>No Available Stats For This Player</h3>
+{% endif %}
 
 {% endblock content %}
 

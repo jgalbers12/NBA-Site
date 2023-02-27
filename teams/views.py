@@ -2,8 +2,6 @@ from django.shortcuts import render
 from . import models
 from . import utils
 
-# Create your views here.
-
 def all_teams(request):
     teams = models.BasicTeam.objects.all()
     context = {

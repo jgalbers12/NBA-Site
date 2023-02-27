@@ -18,7 +18,6 @@ from django.urls import path,include
 from django.views.generic import RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
-from django.contrib.auth import urls
 
 from users.views import register_user
 
@@ -26,9 +25,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('players/', include('players.urls')),
     path('teams/', include('teams.urls')),
-    path('users/', include(urls)),
-    path('users/register_user/', register_user, name='register'),
-    path('', RedirectView.as_view(pattern_name='teams:all_teams'),name="home"),
+    path('users/', include('django.contrib.auth.urls')),
+    path('users/', include('users.urls')),
+    path('', RedirectView.as_view(pattern_name='teams:all_teams'),name="home")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
