@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from . import models
 from . import utils
 
@@ -30,3 +31,4 @@ def team_standings(request):
         'standings': standings
     }
     return render(request, 'teams/team_standings.html',context=context)
+

@@ -1,4 +1,5 @@
 from nba_api.stats.endpoints import CommonPlayerInfo
+from nba_api.stats.endpoints import LeagueLeaders
 from nba_api.stats.static import players
 
 def get_active_players():
@@ -38,3 +39,12 @@ class PlayerInfo(CommonPlayerInfo):
             return stats
         except:
             return None
+        
+class Leaders(LeagueLeaders):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.data = self.get_normalized_dict()['LeagueLeaders']
+        self.col_names = self.expected_data['LeagueLeaders']
+    
+    
+

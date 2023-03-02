@@ -5,6 +5,16 @@
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="">
+    <input type="submit" value="Submit">
 </form>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </ul>
+{% endif %}
+{% if form.errors %}
+    {{form.erros.as_p}}
+{% endif %}
 {% endblock content %}

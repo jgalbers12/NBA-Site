@@ -6,7 +6,7 @@
 <h1>{{bio.DISPLAY_FIRST_LAST}}</h1>
 <h2>{{bio.TEAM_CITY}} {{bio.TEAM_NAME}}</h2>
 <ul>
-    <li>Birthday: {{bio.BIRTHDATE}}</li>
+    <li>Birthday: {{ bio.BIRTHDATE|date:"F d Y" }}</li>
     <li>Height: {{bio.HEIGHT}}</li>
     <li>Experience: {{bio.SEASON_EXP}} seasons</li>
     <li>Jersey Number: {{bio.JERSEY}}</li>

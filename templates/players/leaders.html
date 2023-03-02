@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class='container-fluid'>
+<form action="" method="GET">
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
+<table class="table">
+    <tr>
+        {% for c in cols %}
+        <th>{{ c }}</th>
+        {% endfor %}
+    </tr>
+    {% for player in stats %}
+    <tr>
+        {% for v in player.values%}
+        <td> {{ v }} </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock content %}
