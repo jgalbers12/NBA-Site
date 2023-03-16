@@ -22,10 +22,11 @@ def get_team_record(team_id=None):
 class TeamRoster(CommonTeamRoster):
     def __init__(self, team_id, **kwargs):
         super().__init__(team_id, **kwargs)
+        self._roster = self.get_normalized_dict()
 
     def _get_team_roster_dict(self):
         """
-        returns a dict, 
+        returns a dict,
         players found at return_dict['CommonTeamRoster'],
         couches found at return_dict['Coaches']
         """
@@ -40,7 +41,7 @@ class TeamRoster(CommonTeamRoster):
         'AGE', 'EXP', 'SCHOOL', 'PLAYER_ID', 'HOW_ACQUIRED'
         """
         roster = self._get_team_roster_dict()
-        players = roster['CommonTeamRoster']
+        players = self._roster['CommonTeamRoster']
         return(players)
     
     def get_coaches(self):

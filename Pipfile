@@ -8,6 +8,8 @@ nba-api = "*"
 django = "*"
 pillow = "*"
 pytest-django = "*"
+numpy = "*"
+pandas = "*"
 
 [dev-packages]
 
