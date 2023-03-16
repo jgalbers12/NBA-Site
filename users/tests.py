@@ -14,7 +14,7 @@ class UserRegistration(TestCase):
         user = User.objects.first()
         self.assertEqual(user.username, username)
 
-    def test_redirect_after_register(self):
+    def test_redirects_home_after_register(self):
         username = 'newuser'
         response = self.client.post('/users/register_user/', data={'username': username, 
                                                             'password1': 'adgjl1357',

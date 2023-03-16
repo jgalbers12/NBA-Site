@@ -43,8 +43,23 @@ class PlayerInfo(CommonPlayerInfo):
 class Leaders(LeagueLeaders):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        #self.data = TableData(self.get_data_frames()[0])
         self.data = self.get_normalized_dict()['LeagueLeaders']
         self.col_names = self.expected_data['LeagueLeaders']
+
+class TableData:
+
+    def __init__(self, data, cols):
+        self.data = data
+        self.cols = cols
+
+    def remove_cols(self, col_nums=None, col_names=None):
+        if col_nums:
+            if isinstance(col_nums, int) and col_nums < len(self.cols):
+                new_data = [x]
+
+
+
     
     
 
