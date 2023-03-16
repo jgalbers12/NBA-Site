@@ -17,17 +17,32 @@ def player_info(request, id):
 def player_leaders(request):
     if request.GET:
         params = request.GET
-        kwargs = {key:params[key] for key in request.GET if key != 'csrfmiddlewaretoken'} # replace this
-        box = utils.Leaders(**kwargs) # requires form fields align with __init__ params
-        form = LeadersForm(initial=kwargs)
+        try: # theres definitly a better way to do this ?
+            permode = params['per_mode48']
+        except KeyError:
+            permode = 'Total'
+        except Exception as e:
+            print(e)
+        try:
+            sort_by = params['sort_by']
+        except KeyError:
+            sort_by = None
+        except Exception as e:
+            print(e)
+        box = utils.Leaders(per_mode48=permode)
+        form = LeadersForm(initial={key:val for key,val in params.items()})
+        box.data.sort_df_by(sort_by)
     else:
         box = utils.Leaders()
         form = LeadersForm()
-    stats = box.data
-    cols = stats[0].keys()
+    box.data.remove_cols(['PLAYER_ID', 'TEAM_ID'])
+    stats_dict = box.data.get_dict()
+    stats = stats_dict['data']
+    cols = stats_dict['columns']
+    form.fields['sort_by'].choices = zip(cols,cols)
     context = {
         'stats': stats,
-        'cols': cols,
+        'cols' : cols,
         'form': form,
     }
     return render(request, 'players/leaders.html', context=context)

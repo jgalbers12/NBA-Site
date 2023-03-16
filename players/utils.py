@@ -1,6 +1,7 @@
 from nba_api.stats.endpoints import CommonPlayerInfo
 from nba_api.stats.endpoints import LeagueLeaders
 from nba_api.stats.static import players
+import pandas as pd
 
 def get_active_players():
     active_players = {}
@@ -10,7 +11,9 @@ def get_active_players():
 
     return(active_players)
 
+
 class PlayerInfo(CommonPlayerInfo):
+    
     def __init__(self, player_id):
         super().__init__(player_id)
 
@@ -40,26 +43,40 @@ class PlayerInfo(CommonPlayerInfo):
         except:
             return None
         
-class Leaders(LeagueLeaders):
+        
+class Leaders:
+
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        #self.data = TableData(self.get_data_frames()[0])
-        self.data = self.get_normalized_dict()['LeagueLeaders']
-        self.col_names = self.expected_data['LeagueLeaders']
-
-class TableData:
-
-    def __init__(self, data, cols):
-        self.data = data
-        self.cols = cols
-
-    def remove_cols(self, col_nums=None, col_names=None):
-        if col_nums:
-            if isinstance(col_nums, int) and col_nums < len(self.cols):
-                new_data = [x]
+        self.endpoint = LeagueLeaders(**kwargs)
+        self.data = StatsTable(self.endpoint.get_data_frames()[0])
 
 
+class StatsTable:
 
-    
-    
+    def __init__(self, df:pd.DataFrame):
+        self.df = df
+
+    def remove_cols(self, col_names):
+        if isinstance(col_names, list):
+            try:
+                new_df = self.df.drop(col_names, axis=1)
+                self.df = new_df
+            except Exception as e:
+                print(e)
+        else:
+            raise Exception("remove_cols takes a list of col_names")
+        
+    def sort_df_by(self, col_name, ascending=False):
+        if col_name in self.df.columns:
+            self.df = self.df.sort_values(by=[col_name], ascending=ascending)
+        elif not col_name:
+            pass
+        else:
+            raise Exception('not a valid column name')
+        
+    def get_dict(self):
+        """
+        returns dict like {'index':[], 'columns':[], 'data':[]}
+        """
+        return self.df.to_dict('split')
 
