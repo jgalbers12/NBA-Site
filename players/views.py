@@ -35,6 +35,7 @@ def player_leaders(request):
     else:
         box = utils.Leaders()
         form = LeadersForm()
+    ids = box.data.df['PLAYER_ID']
     box.data.remove_cols(['PLAYER_ID', 'TEAM_ID'])
     stats_dict = box.data.get_dict()
     stats = stats_dict['data']
@@ -44,5 +45,6 @@ def player_leaders(request):
         'stats': stats,
         'cols' : cols,
         'form': form,
+        'ids': ids,
     }
     return render(request, 'players/leaders.html', context=context)

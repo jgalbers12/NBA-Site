@@ -5,8 +5,6 @@ import pandas as pd
 
 from .utils import Leaders, StatsTable
 
-# Create your tests here.
-
 class PlayerLeadersTests(TestCase):
 
     def test_uses_correct_template(self):
@@ -26,6 +24,14 @@ class PlayerLeadersTests(TestCase):
         data = response.context['stats']
         self.assertGreater(len(data), 1)
         self.assertContains(response, '<td>')
+
+    def test_sends_ids_in_context(self):
+        response = self.client.get('/players/leaders/')
+        data = response.context['stats']
+        ids = response.context['ids']
+        self.assertGreater(len(ids), 1)
+        self.assertEqual(len(ids), len(data))
+
 
 class LeadersUtilsTests(TC):
 
