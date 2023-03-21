@@ -17,34 +17,31 @@ def player_info(request, id):
 def player_leaders(request):
     if request.GET:
         params = request.GET
-        try: # theres definitly a better way to do this ?
-            permode = params['per_mode48']
-        except KeyError:
-            permode = 'Total'
-        except Exception as e:
-            print(e)
-        try:
-            sort_by = params['sort_by']
-        except KeyError:
-            sort_by = None
-        except Exception as e:
-            print(e)
-        box = utils.Leaders(per_mode48=permode)
+        expected_params = {'per_mode48':'Totals', 'sort_by':None, 'asc':False}
+        for k in params.keys():
+            try:
+                expected_params[k] = params[k]
+            except KeyError:
+                print(f'key error {k}')
+
+        box = utils.Leaders(per_mode48=expected_params['per_mode48'])
         form = LeadersForm(initial={key:val for key,val in params.items()})
-        box.data.sort_df_by(sort_by)
+        box.data.sort_df_by(expected_params['sort_by'], bool(expected_params['asc']))
+
     else:
         box = utils.Leaders()
         form = LeadersForm()
-    ids = box.data.df['PLAYER_ID']
-    box.data.remove_cols(['PLAYER_ID', 'TEAM_ID'])
+
+    names = box.data.df['PLAYER']
+    box.data.remove_cols(['PLAYER', 'RANK', 'TEAM_ID'])
     stats_dict = box.data.get_dict()
-    stats = stats_dict['data']
+    name_id_stats = zip(names, stats_dict['index'], stats_dict['data'])
     cols = stats_dict['columns']
     form.fields['sort_by'].choices = zip(cols,cols)
+    
     context = {
-        'stats': stats,
+        'name_id_stats': name_id_stats,
         'cols' : cols,
         'form': form,
-        'ids': ids,
     }
     return render(request, 'players/leaders.html', context=context)

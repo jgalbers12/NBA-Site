@@ -21,16 +21,24 @@ class PlayerLeadersTests(TestCase):
 
     def test_template_receives_and_displays_data(self):
         response = self.client.get('/players/leaders/')
-        data = response.context['stats']
+        data = list(response.context['name_id_stats'])
         self.assertGreater(len(data), 1)
         self.assertContains(response, '<td>')
 
-    def test_sends_ids_in_context(self):
+    def test_template_has_rank_col(self):
         response = self.client.get('/players/leaders/')
-        data = response.context['stats']
-        ids = response.context['ids']
-        self.assertGreater(len(ids), 1)
-        self.assertEqual(len(ids), len(data))
+        self.assertContains(response, '<th>RANK')
+
+    def test_template_contains_links_to_player_info(self):
+        response = self.client.get('/players/leaders/')
+        num = len(list(response.context['name_id_stats']))
+        self.assertContains(response, 'href="player_info/"', count=num)
+
+    def test_view_processes_parameters(self):
+        response = self.client.get('/players/leaders/', data={'per_mode48':'Totals',
+                                                              'asc':True,
+                                                              'sort_by':'GP'})
+        self.assertEqual(response.status_code, 200)
 
 
 class LeadersUtilsTests(TC):
@@ -56,3 +64,9 @@ class LeadersUtilsTests(TC):
         self.assertTrue(isinstance(data_dict, dict))
         self.assertTrue(len(data_dict['data']) > 0)
 
+    def test_leaders_uses_correct_index(self):
+        data = Leaders().data
+        data_dict = data.get_dict()
+        indices = data_dict['index']
+        for i in indices:
+            self.assertRegex(str(i), r'[0-9]+')

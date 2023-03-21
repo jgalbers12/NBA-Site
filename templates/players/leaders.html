@@ -8,16 +8,20 @@
 </form>
 <table class="table">
     <tr>
+        <th>RANK</th>
+        <th>PLAYER</th>
         {% for c in cols %}
             <th>{{ c }}</th>
         {% endfor %}
     </tr>
-    {% for player in stats %}
-    <tr>
-        {% for i in player%}
-        <td> {{ i }} </td>
-        {% endfor %}
-    </tr>
+    {% for name, id, player in name_id_stats %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="/players/player_info/{{ id }}">{{ name }}</a></td>
+            {% for i in player %}
+                <td> {{ i }} </td>
+            {% endfor %}
+        </tr>
     {% endfor %}
 </table>
 </div>

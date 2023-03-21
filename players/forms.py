@@ -10,4 +10,5 @@ class LeadersForm(forms.Form):
     )
 
     per_mode48 = forms.ChoiceField(choices=PER_MODE_CHOICES, label='Per Mode')
-    sort_by = forms.ChoiceField(required=False, label='Sort By')
+    sort_by = forms.ChoiceField(required=False, label='Sort By', initial='PTS')
+    asc = forms.BooleanField(required=False)

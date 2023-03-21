@@ -46,15 +46,15 @@ class PlayerInfo(CommonPlayerInfo):
         
 class Leaders:
 
-    def __init__(self, **kwargs):
-        self.endpoint = LeagueLeaders(**kwargs)
+    def __init__(self, per_mode48='Totals'):
+        self.endpoint = LeagueLeaders(per_mode48 = per_mode48)
         self.data = StatsTable(self.endpoint.get_data_frames()[0])
 
 
 class StatsTable:
 
     def __init__(self, df:pd.DataFrame):
-        self.df = df
+        self.df = df.set_index('PLAYER_ID')
 
     def remove_cols(self, col_names):
         if isinstance(col_names, list):
